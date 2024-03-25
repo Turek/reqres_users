@@ -1,7 +1,7 @@
 {
     "name": "turek/reqres_users",
     "description": "Drupal module providing a block with paginated listing of users retrieved from third party REST-API - Reqres",
-    "type": "drupall-module",
+    "type": "drupal-module",
     "require": {
         "drupal/core": "^10",
         "drupal/migrate_plus": "^6"
