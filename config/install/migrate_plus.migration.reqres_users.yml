@@ -1,0 +1,36 @@
+
+id: reqres_users
+label: Import users from Reqres.in API
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  urls: 'https://reqres.in/api/users'
+  item_selector: data
+  fields:
+    -
+      name: id
+      label: 'User ID'
+      selector: id
+    -
+      name: email
+      label: 'Email'
+      selector: email
+    -
+      name: first_name
+      label: 'First Name'
+      selector: first_name
+    -
+      name: last_name
+      label: 'Last Name'
+      selector: last_name
+process:
+  id: id
+  email: email
+  first_name: first_name
+  last_name: last_name
+destination:
+  plugin: 'entity:reqres_user'
+migration_dependencies:
+  required: {  }
+  optional: {  }

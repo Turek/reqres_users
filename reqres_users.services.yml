@@ -1,0 +1,4 @@
+services:
+  reqres_users.user_service:
+    class: Drupal\reqres_users\Service\ReqresUserService
+    arguments: ['@entity_type.manager']
