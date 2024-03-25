@@ -1,5 +1,5 @@
 {
-    "name": "tturczynski/reqres_users",
+    "name": "turek/reqres_users",
     "description": "Drupal module providing a block with paginated listing of users retrieved from third party REST-API - Reqres",
     "type": "drupall-module",
     "require": {
