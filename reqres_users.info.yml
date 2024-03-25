@@ -1,0 +1,14 @@
+name: 'Reqres Users'
+type: module
+description: 'Integrates with Reqres.in API to fetch and display user data.'
+package: 'Custom'
+version: '1.0'
+core_version_requirement: ^8 || ^9 || ^10
+dependencies:
+  - drupal:block
+  - drupal:entity
+  - drupal:http_client
+  - drupal:serialization
+  - drupal:system
+  - drupal:user
+  - drupal:migrate
