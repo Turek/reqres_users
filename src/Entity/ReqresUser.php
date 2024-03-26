@@ -53,4 +53,84 @@ class ReqresUser extends ContentEntityBase {
     return $fields;
   }
 
+  /**
+   * Gets the email of the user.
+   *
+   * @return string
+   *   The email of the user.
+   */
+  public function getEmail() {
+    return $this->get('email')->value;
+  }
+
+  /**
+   * Sets the email of the user.
+   *
+   * @param string $email
+   *   The email of the user.
+   *
+   * @return $this
+   */
+  public function setEmail($email) {
+    $this->set('email', $email);
+    return $this;
+  }
+
+  /**
+   * Gets the first name of the user.
+   *
+   * @return string
+   *   The first name of the user.
+   */
+  public function getFirstName() {
+    return $this->get('first_name')->value;
+  }
+
+  /**
+   * Sets the first name of the user.
+   *
+   * @param string $first_name
+   *   The first name of the user.
+   *
+   * @return $this
+   */
+  public function setFirstName($first_name) {
+    $this->set('first_name', $first_name);
+    return $this;
+  }
+
+  /**
+   * Gets the last name of the user.
+   *
+   * @return string
+   *   The last name of the user.
+   */
+  public function getLastName() {
+    return $this->get('last_name')->value;
+  }
+
+  /**
+   * Sets the last name of the user.
+   *
+   * @param string $last_name
+   *   The last name of the user.
+   *
+   * @return $this
+   */
+  public function setLastName($last_name) {
+    $this->set('last_name', $last_name);
+    return $this;
+  }
+
+  /**
+   * Gets the name of the user (first and last name combined).
+   *
+   * @return string
+   *   The name of the user.
+   */
+  public function getName() {
+    return $this->get('first_name')->value . ' ' . $this->get('last_name')->value;
+  }
+
+
 }
