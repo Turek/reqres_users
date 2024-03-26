@@ -3,8 +3,8 @@
 namespace Drupal\reqres_users\Plugin\migrate_plus\data_parser;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\migrate_plus\DataParserPluginBase;
 use GuzzleHttp\Client;
+use Drupal\migrate_plus\Plugin\migrate_plus\data_parser\Json;
 
 /**
  * Obtain JSON data for migration.
@@ -27,8 +27,9 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->httpClient = \Drupal::httpClient();
+    $base_url = current($this->urls);
 
-    $response = $this->httpClient->get(current($this->urls));
+    $response = $this->httpClient->get($base_url);
     $data = json_decode($response->getBody(), TRUE);
 
     // Extract pagination information.
@@ -37,13 +38,13 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
 
     // Generate URLs for each page of data.
     for ($page = 1; $page <= $total_pages; $page++) {
-      $urls[] = $url . '?page=' . $page;
+      $urls[] = $base_url . '?page=' . $page;
     }
 
+    // Update list of URLs pased on pagination.
     if (!empty($urls)) {
       $this->urls = $urls;
     }
-
   }
 
 
