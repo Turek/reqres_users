@@ -24,6 +24,9 @@ source:
       name: last_name
       label: 'Last Name'
       selector: last_name
+  ids:
+    id:
+      type: int
 process:
   id: id
   email: email
