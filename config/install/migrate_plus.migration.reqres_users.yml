@@ -26,7 +26,7 @@ source:
       selector: last_name
   ids:
     id:
-      type: int
+      type: integer
 process:
   id: id
   email: email
