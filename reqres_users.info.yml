@@ -8,3 +8,5 @@ dependencies:
   - drupal:block
   - drupal:entity
   - drupal:migrate
+  - drupal:migrate_plus
+  - drupal:migrate_tools

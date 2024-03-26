@@ -4,7 +4,8 @@
     "type": "drupal-module",
     "require": {
         "drupal/core": "^10",
-        "drupal/migrate_plus": "^6"
+        "drupal/migrate_plus": "^6",
+        "drupal/migrate_tools": "^6"
     },
     "license": "GPL-2.0-or-later",
     "authors": [
