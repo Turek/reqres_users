@@ -4,7 +4,7 @@ label: Import users from Reqres.in API
 source:
   plugin: url
   data_fetcher_plugin: http
-  data_parser_plugin: json
+  data_parser_plugin: paginated_json
   urls: 'https://reqres.in/api/users'
   item_selector: data
   fields:
