@@ -6,7 +6,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
 
 /**
- * Subscriber for altering Reqres users.
+ * An example subscriber for altering Reqres users.
+ *
+ * Updates emails to lowercase.
  */
 class ReqresUsersAlterSubscriber implements EventSubscriberInterface {
 

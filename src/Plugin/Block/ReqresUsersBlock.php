@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Provides a block with users from Reqres.in API.
@@ -24,7 +25,19 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    * @var \GuzzleHttp\ClientInterface
    */
   protected $httpClient;
+
+  /**
+   * Request stack that controls the lifecycle of requests.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
   protected $requestStack;
+
+  /**
+   * Service for Reqres database connectivity.
+   *
+   * @var \Drupal\reqres_users\Service\ReqresUserService
+   */
   protected $reqresUserService;
 
   /**
@@ -36,6 +49,10 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param RequestStack $request_stack
+   *   Request stack that controls the lifecycle of requests.
+   * @param ReqresUserService $reqres_user_service
+   *   Service for Reqres database connectivity.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The HTTP client.
    */
@@ -46,6 +63,9 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
     $this->httpClient = $http_client;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
