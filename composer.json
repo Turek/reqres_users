@@ -3,6 +3,7 @@
     "description": "Drupal module providing a block with paginated listing of users retrieved from third party REST-API - Reqres",
     "type": "drupal-module",
     "require": {
+        "php": "^8.1",
         "drupal/core": "^10",
         "drupal/migrate_plus": "^6",
         "drupal/migrate_tools": "^6"
@@ -18,5 +19,8 @@
         "psr-4": {
             "Drupal\\Tests\\reqres_users\\": "tests/src/"
         }
+    },
+    "autoload": {
+        "psr-4": { "Drupal\\reqres_users\\": "src/" }
     }
 }
