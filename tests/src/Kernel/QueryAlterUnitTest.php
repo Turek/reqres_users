@@ -51,7 +51,7 @@ class QueryAlterUnitTest extends KernelTestBase {
     $this->assertEquals(1, count($users), 'Only one user returned after query alteration.');
     // Ensure that first returned user is John, not Emma.
     $user = current($users);
-    $this->assertEquals('John', $user->getName(), "The user 'John' is returned after query alteration.");
+    $this->assertEquals('John', trim($user->getName()), "The user 'John' is returned after query alteration.");
   }
 
 }

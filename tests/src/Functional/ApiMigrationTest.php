@@ -4,10 +4,10 @@ namespace Drupal\Tests\reqres_users\Functional;
 
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessageInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\reqres_users\Traits\ApiTestTrait;
-use Drupal\migrate\Plugin\MigrationInterface;
 
 /**
  * Tests API data migration.
@@ -18,6 +18,9 @@ class ApiMigrationTest extends BrowserTestBase {
 
   use ApiTestTrait;
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = ['migrate_plus', 'reqres_users', 'migrate'];
 
   /**
@@ -59,7 +62,7 @@ class ApiMigrationTest extends BrowserTestBase {
     $result = $query->execute()->fetchAll();
 
     // Expected at least one item to be processed.
-    $processedCount = count($result); 
+    $processedCount = count($result);
     $this->assertGreaterThan(0, $processedCount, 'Expected at least one item to be processed.');
 
     // Check the count of migrated ReqresUsers entities.
