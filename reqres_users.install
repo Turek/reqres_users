@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file Install file for reqres_users module.
+ */
+
+/**
  * Implements hook_schema().
  */
 function reqres_user_schema() {

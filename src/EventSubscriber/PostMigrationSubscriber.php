@@ -2,15 +2,32 @@
 
 namespace Drupal\reqres_users\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\Core\Cache\Cache;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
-use Drupal\Core\Cache\Cache;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class PostMigrationSubscriber.
+ * Class for post migration subscriber.
  */
 class PostMigrationSubscriber implements EventSubscriberInterface {
+
+  /**
+   * The logger service.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected $logger;
+
+  /**
+   * Constructs a new PostMigrationSubscriber.
+   *
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   The logger service.
+   */
+  public function __construct(LoggerChannelInterface $logger) {
+    $this->logger = $logger;
+  }
 
   /**
    * Post migration event subscriber to invalidate caches when new content
@@ -29,14 +46,14 @@ class PostMigrationSubscriber implements EventSubscriberInterface {
 
     // Only invalidate cache if there were updates or new imports.
     if ($imported > 0 || $updated > 0) {
-      // Specify the cache tags you want to invalidate
+      // Specify the cache tags you want to invalidate.
       $tags = ['reqres_users_migrate'];
 
-      // Invalidate cache tags
+      // Invalidate cache tags.
       Cache::invalidateTags($tags);
 
       // Optionally, log this action.
-      \Drupal::logger('custom_migration')->info('Cache tags invalidated after migration.');
+      $this->logger->info('Cache tags invalidated after migration.');
     }
   }
 

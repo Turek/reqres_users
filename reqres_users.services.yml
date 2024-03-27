@@ -5,6 +5,7 @@ services:
 
   reqres_users.event_subscriber:
     class: Drupal\reqres_users\EventSubscriber\PostMigrationSubscriber
+    arguments: ['@logger.channel.reqres_users']
     tags:
       - { name: event_subscriber }
 

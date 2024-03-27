@@ -9,7 +9,6 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Exception;
 
 /**
  * Provides a service for database connectivity.
@@ -19,50 +18,50 @@ class ReqresUserService implements ReqresUserServiceInterface {
   /**
    * The cache backend instance.
    *
-   * @var CacheBackendInterface
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
   /**
    * The entity type manager.
    *
-   * @var EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
    * The event dispatcher.
    *
-   * @var EventDispatcherInterface
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
 
   /**
    * The logger service.
    *
-   * @var LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected $logger;
 
   /**
    * The module handler.
    *
-   * @var ModuleHandlerInterface
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
 
   /**
    * Constructs a new ReqresUserService object.
    *
-   * @param CacheBackendInterface $cache
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   The cache backend service.
-   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
-   * @param EventDispatcherInterface $eventDispatcher
+   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher service.
-   * @param LoggerChannelInterface $logger
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
    *   The logger service.
-   * @param ModuleHandlerInterface $moduleHandler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler service.
    */
   public function __construct(CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager, EventDispatcherInterface $eventDispatcher, LoggerChannelInterface $logger, ModuleHandlerInterface $moduleHandler) {
@@ -80,6 +79,7 @@ class ReqresUserService implements ReqresUserServiceInterface {
    *   The number of items the calling code will display per page.
    * @param int $page
    *   Page number to be displayed.
+   *
    * @return array
    *   Return array of user objects.
    */

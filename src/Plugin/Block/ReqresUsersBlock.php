@@ -4,13 +4,12 @@ namespace Drupal\reqres_users\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Pager\PagerManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\reqres_users\Service\ReqresUserService;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\reqres_users\Service\ReqresUserService;
-use Drupal\Core\Pager\PagerManagerInterface;
-use Exception;
 
 /**
  * Provides a block with users from Reqres.in API.
@@ -91,7 +90,6 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
     );
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -158,9 +156,6 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function build() {
     try {
-      // Get the current page from the request.
-      $request = $this->requestStack->getCurrentRequest();
-
       // Get the configuration.
       $config = $this->getConfiguration();
       $limit = $config['items_per_page'];
@@ -205,7 +200,8 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
       return $build;
     }
     catch (\Exception $e) {
-      // Log error and potentially display a user-friendly error message or fallback content.
+      // Log error and potentially display a user-friendly error message
+      // or fallback content.
       $this->logger->error('Error fetching users: @message', ['@message' => $e->getMessage()]);
       return ['#markup' => $this->t('Unable to display users at this time.')];
     }

@@ -134,5 +134,4 @@ class ReqresUser extends ContentEntityBase {
     return $this->get('first_name')->value . ' ' . $this->get('last_name')->value;
   }
 
-
 }

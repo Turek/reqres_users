@@ -3,11 +3,11 @@
 namespace Drupal\reqres_users\Plugin\migrate_plus\data_parser;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate_plus\DataParserPluginBase;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_parser\Json;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\migrate_plus\DataParserPluginBase;
 
 /**
  * Obtain JSON data for migration.
@@ -22,14 +22,14 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
   /**
    * The HTTP client.
    *
-   * @var ClientInterface
+   * @var \GuzzleHttp\ClientInterface
    */
   protected $httpClient;
 
   /**
    * The logger service.
    *
-   * @var LoggerInterface
+   * @var \Psr\Log\LoggerInterface
    */
   protected $logger;
 
@@ -42,9 +42,9 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param ClientInterface $httpClient
+   * @param \GuzzleHttp\ClientInterface $httpClient
    *   The HTTP client service.
-   * @param LoggerInterface $logger
+   * @param \Psr\Log\LoggerInterface $logger
    *   The logger service.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ClientInterface $httpClient, LoggerInterface $logger) {
@@ -82,7 +82,10 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
       }
     }
     catch (\Exception $e) {
-      $this->logger->error('Failed to fetch initial data from @url: @message', ['@url' => $base_url, '@message' => $e->getMessage()]);
+      $this->logger->error('Failed to fetch initial data from @url: @message', [
+        '@url' => $base_url,
+        '@message' => $e->getMessage(),
+      ]);
     }
   }
 

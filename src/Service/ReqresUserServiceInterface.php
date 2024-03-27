@@ -8,14 +8,15 @@ namespace Drupal\reqres_users\Service;
 interface ReqresUserServiceInterface {
 
   /**
-   * Constructs a ReqresApiService object.
+   * Gets Reqres users from the database based on provided vatiables.
    *
-   * @param CacheBackendInterface $cache
-   *   The cache backend service.
-   * @param EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager service.
-   * @param EventDispatcherInterface $eventDispatcher
-   *   The event dispatcher service.
+   * @param int $limit
+   *   The number of items the calling code will display per page.
+   * @param int $page
+   *   Page number to be displayed.
+   *
+   * @return array
+   *   Return array of user objects.
    */
   public function getUsers(int $limit, int $page): array;
 

@@ -54,4 +54,3 @@ function hook_query_reqres_users_query_alter(\Drupal\Core\Database\Query\Alterab
 ```
 
 # Altering output of the block
-

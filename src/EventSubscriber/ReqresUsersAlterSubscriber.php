@@ -2,8 +2,8 @@
 
 namespace Drupal\reqres_users\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * An example subscriber for altering Reqres users output.
