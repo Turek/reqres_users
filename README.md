@@ -1,3 +1,14 @@
+Drupal module that provides a block listing the users from a
+third party service. For the purposes of this test, please 
+integrate with the https://reqres.in/ dummy API.
+
+The block provides a paginated listing of users retrieved 
+from the API, basic configuration of the output is possible 
+when placing the block.
+
+There are three extension points exposed to change sql query
+before it is executed, hook or event for altering response.
+
 # Installing module
 
 Add repository to your `composer.json` file repositories list:
@@ -54,3 +65,17 @@ function hook_query_reqres_users_query_alter(\Drupal\Core\Database\Query\Alterab
 ```
 
 # Altering output of the block
+
+Check the `ReqresUsersAlterSubscriber.php` file for example implementation of 
+event based alteration of returned data.
+
+Another example is to use hooks, check `reqres_users.api.php` file for  example
+hook implementation: `hook_reqres_users_data_alter`.
+
+# Running tests
+
+Run the following command to execute unit tests for the module:
+
+```bash
+./vendor/bin/phpunit -c web/core ./web/modules/contrib/reqres_users/tests/src
+```
