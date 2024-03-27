@@ -40,7 +40,8 @@ class ReqresUsersMigrationTest extends KernelTestBase {
     // Check if the migration could be loaded.
     $this->assertNotFalse($migration, 'The reqres_users migration could not be loaded.');
 
-    // Proceed with creating the MigrateExecutable only if the migration is successfully loaded.
+    // Proceed with creating the MigrateExecutable only if the migration
+    // is successfully loaded.
     $executable = new MigrateExecutable($migration, new MigrateMessage());
 
     // Execute the migration.
@@ -54,4 +55,5 @@ class ReqresUsersMigrationTest extends KernelTestBase {
     $actualCount = \Drupal::entityQuery('reqres_users')->count()->execute();
     $this->assertEquals($expectedCount, $actualCount, 'The expected number of ReqresUsers entities have been migrated.');
   }
+
 }

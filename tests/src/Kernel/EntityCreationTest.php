@@ -3,8 +3,6 @@
 namespace Drupal\Tests\reqres_users\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\reqres_users\Entity\ReqresUser;
 
 /**
@@ -32,7 +30,7 @@ class EntityCreationTest extends KernelTestBase {
   }
 
   /**
-   * Create a node by using createNode() from NodeCreationTrait.
+   * Create a user and check if it was created.
    */
   public function testEntityCreation() {
     /** @var \Drupal\reqres_users\Entity\ReqresUser $user */

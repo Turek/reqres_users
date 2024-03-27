@@ -1,9 +1,15 @@
 <?php
 
 /**
+ * @file est_query_alter_module.module
+ */
+
+use Drupal\Core\Database\Query\AlterableInterface;
+
+/**
  * Implements hook_query_reqres_users_query_alter().
  */
-function test_query_alter_module_query_reqres_users_query_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+function test_query_alter_module_query_reqres_users_query_alter(AlterableInterface $query) {
   // Skip Emma from the list.
   $query->condition('first_name', 'Emma', '!=');
 }

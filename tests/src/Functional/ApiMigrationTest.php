@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\reqres_users\Functional;
 
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessageInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\reqres_users\Traits\ApiTestTrait;
 
@@ -24,6 +26,7 @@ class ApiMigrationTest extends BrowserTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->migrationPluginManager = $this->container->get('plugin.manager.migration');
 
     // Perform API call before migration.
     $this->performApiCall();
@@ -34,13 +37,13 @@ class ApiMigrationTest extends BrowserTestBase {
    */
   public function testMigration() {
     // Trigger the migration programmatically.
-    $migration_id = 'reqres_users'; // Replace with your migration ID.
-    $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_id);
+    $migration_id = 'reqres_users';
+    $migration = $this->migrationPluginManager->createInstance($migration_id);
     $migration->getIdMap()->prepareUpdate();
-    $executable = new \Drupal\migrate\MigrateExecutable($migration, $this->getMockMigrationMessage());
+    $executable = new MigrateExecutable($migration, $this->getMockMigrationMessage());
     $executable->import();
     $migration->getIdMap()->saveMessage();
-    
+
     // Assert that the migration was successful.
     $this->assertEqual($migration->getProcessedCount(), $migration->getCount(), 'Migration was successful.');
   }
@@ -49,7 +52,7 @@ class ApiMigrationTest extends BrowserTestBase {
    * Mocks the migration message.
    */
   protected function getMockMigrationMessage() {
-    return $this->getMockBuilder(\Drupal\migrate\MigrateMessageInterface::class)
+    return $this->getMockBuilder(MigrateMessageInterface::class)
       ->disableOriginalConstructor()
       ->getMock();
   }

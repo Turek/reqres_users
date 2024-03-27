@@ -13,13 +13,6 @@ use Drupal\Tests\UnitTestCase;
 class EntityExistenceTest extends UnitTestCase {
 
   /**
-   * Sets up the test environment.
-   */
-  public function setUp(): void {
-    parent::setUp();
-  }
-
-  /**
    * Tests if the custom entity class exists.
    */
   public function testEntityClassExists() {

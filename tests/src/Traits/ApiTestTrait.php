@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\reqres_users\Traits;
 
-use Drupal\Tests\BrowserTestBase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
@@ -32,21 +31,22 @@ trait ApiTestTrait {
         throw new \RuntimeException('API request failed with status code ' . $response->getStatusCode());
       }
 
-      // Decode the JSON response
+      // Decode the JSON response.
       $data = json_decode($response->getBody(), TRUE);
 
-      // Check if it's an array (assuming each user is an object in the response)
+      // Check if it's an array (assuming each user is an object
+      // in the response).
       if (is_array($data['data'])) {
         // Get the first user object
         $user = reset($data['data']);
 
-        // Expected fields in the response
+        // Expected fields in the response.
         $expectedFields = ['id', 'first_name', 'last_name', 'email'];
 
-        // Check if all expected fields exist in the user object
+        // Check if all expected fields exist in the user object.
         $missingFields = array_diff($expectedFields, array_keys($user));
 
-        // Assert there are no missing fields
+        // Assert there are no missing fields.
         $this->assertEmpty($missingFields, 'Missing expected fields in the response: ' . implode(', ', $missingFields));
       }
       else {

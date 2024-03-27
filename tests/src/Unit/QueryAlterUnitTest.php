@@ -4,10 +4,6 @@ namespace Drupal\Tests\reqres_users\Unit;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\reqres_users\Entity\ReqresUser;
-use Drupal\Core\Database\Database;
-use Drupal\Core\DrupalKernel;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tests the alteration of user query.
@@ -47,7 +43,8 @@ class QueryAlterUnitTest extends KernelTestBase {
     // Execute the query.
     $result = $query->execute()->fetchAll();
 
-    // Ensure that the altered query does not return users with first_name 'Emma'.
+    // Ensure that the altered query does not return users
+    // with first_name 'Emma'.
     $this->assertEquals(1, count($result), 'Only one user returned after query alteration.');
     $this->assertEquals('John', $result[0]->first_name, "The user 'John' is returned after query alteration.");
   }

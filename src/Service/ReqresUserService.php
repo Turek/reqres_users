@@ -2,13 +2,13 @@
 
 namespace Drupal\reqres_users\Service;
 
-use Drupal\reqres_users\Service\ReqresUserServiceInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
+use Drupal\reqres_users\Service\ReqresUserServiceInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Provides a service for database connectivity.
