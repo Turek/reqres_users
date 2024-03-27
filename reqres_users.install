@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function reqres_user_schema() {
+  $schema['reqres_users'] = [
+    'description' => 'The base table for Reqres User entities.',
+    'fields' => [
+      'id' => [
+        'description' => 'The ID of the Reqres User entity.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'uuid' => [
+        'description' => 'The UUID of the Reqres User entity.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'description' => 'The email of the Reqres User entity.',
+        'type' => 'varchar',
+        'length' => 254,
+        'not null' => TRUE,
+      ],
+      'first_name' => [
+        'description' => 'The first name of the Reqres User entity.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'last_name' => [
+        'description' => 'The last name of the Reqres User entity.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

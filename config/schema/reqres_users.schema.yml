@@ -1,0 +1,24 @@
+reqres_users.entity.reqres_users:
+  type: mapping
+  label: 'Reqres User Entity Fields'
+  mapping:
+    id:
+      type: integer
+      label: 'ID'
+      description: 'The ID of the Reqres User entity.'
+    uuid:
+      type: string
+      label: 'UUID'
+      description: 'The UUID of the Reqres User entity.'
+    email:
+      type: string
+      label: 'Email'
+      description: 'The email of the Reqres User entity.'
+    first_name:
+      type: string
+      label: 'First Name'
+      description: 'The first name of the Reqres User entity.'
+    last_name:
+      type: string
+      label: 'Last Name'
+      description: 'The last name of the Reqres User entity.'

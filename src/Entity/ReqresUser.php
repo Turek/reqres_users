@@ -24,6 +24,8 @@ use Drupal\Core\Field\BaseFieldDefinition;
  */
 class ReqresUser extends ContentEntityBase {
 
+  const ENTITY_TYPE_ID = 'reqres_user';
+
   /**
    * {@inheritdoc}
    */
