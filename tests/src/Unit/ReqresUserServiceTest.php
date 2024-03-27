@@ -5,8 +5,8 @@ namespace Drupal\Tests\reqres_users\Unit;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\reqres_users\Service\ReqresUserService;
@@ -48,7 +48,7 @@ class ReqresUserServiceTest extends UnitTestCase {
     $service = new ReqresUserService($cacheBackend, $entityTypeManager, $eventDispatcher, $logger, $moduleHandler);
 
     // Perform the method call.
-    $result = $service->getUsers(10, 1); // Adjust arguments as necessary
+    $result = $service->getUsers(10, 1);
 
     // Assert the expected results.
     $this->assertCount(2, $result, 'Expected two entities to be returned.');

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @file est_query_alter_module.module
+ * @file
+ * The module file for test_query_alter_module.
  */
 
 use Drupal\Core\Database\Query\AlterableInterface;

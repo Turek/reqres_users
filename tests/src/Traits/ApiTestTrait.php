@@ -37,7 +37,7 @@ trait ApiTestTrait {
       // Check if it's an array (assuming each user is an object
       // in the response).
       if (is_array($data['data'])) {
-        // Get the first user object
+        // Get the first user object.
         $user = reset($data['data']);
 
         // Expected fields in the response.

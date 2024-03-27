@@ -31,7 +31,7 @@ class PostMigrationSubscriber implements EventSubscriberInterface {
 
   /**
    * Post migration event subscriber.
-   * 
+   *
    * To invalidate caches when new content was added or updated.
    *
    * @param \Drupal\migrate\Event\MigrateImportEvent $event

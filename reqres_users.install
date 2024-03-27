@@ -1,9 +1,8 @@
 <?php
 
 /**
- * @file reqres_users.install
- * 
- * Install file for reqres_users module.
+ * @file
+ * The install file for reqres_users.
  */
 
 /**
