@@ -9,6 +9,7 @@ use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\reqres_users\Service\ReqresUserService;
+use Drupal\Core\Pager\PagerManagerInterface;
 use Exception;
 
 /**
