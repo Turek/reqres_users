@@ -1,7 +1,7 @@
 services:
   reqres_users.service:
     class: Drupal\reqres_users\Service\ReqresUserService
-    arguments: ['@cache.default', '@entity_type.manager', '@event_dispatcher']
+    arguments: ['@cache.default', '@entity_type.manager', '@event_dispatcher', '@logger.channel.reqres_users', '@module_handler']
 
   reqres_users.event_subscriber:
     class: Drupal\reqres_users\EventSubscriber\PostMigrationSubscriber
@@ -12,3 +12,8 @@ services:
     class: Drupal\reqres_users\EventSubscriber\ReqresUsersAlterSubscriber
     tags:
       - { name: event_subscriber }
+
+  logger.channel.reqres_users:
+    class: Drupal\Core\Logger\LoggerChannel
+    arguments: ['reqres_users']
+    factory: logger.factory:get
