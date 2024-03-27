@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements hook_query_reqres_users_query_alter().
+ */
+function test_query_alter_module_query_reqres_users_query_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+  // Skip Emma from the list.
+  $query->condition('first_name', 'Emma', '!=');
+}

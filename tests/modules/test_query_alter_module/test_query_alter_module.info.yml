@@ -1,0 +1,5 @@
+name: 'Test Query Alter Module'
+type: module
+description: 'Module for testing query alteration functionality.'
+core_version_requirement: ^8 || ^9 || ^10
+package: Custom
