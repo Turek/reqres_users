@@ -9,6 +9,7 @@ use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\reqres_users\Service\ReqresUserService;
+use Exception;
 
 /**
  * Provides a block with users from Reqres.in API.
@@ -28,18 +29,25 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $httpClient;
 
   /**
-   * Request stack that controls the lifecycle of requests.
+   * The request stack that controls the lifecycle of requests.
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $requestStack;
 
   /**
-   * Service for Reqres database connectivity.
+   * The service for Reqres database connectivity.
    *
    * @var \Drupal\reqres_users\Service\ReqresUserService
    */
   protected $reqresUserService;
+
+  /**
+   * The pager manager service.
+   *
+   * @var \Drupal\Core\Pager\PagerManagerInterface
+   */
+  protected $pagerManager;
 
   /**
    * Constructs a new ReqresUsersBlock object.
@@ -50,18 +58,21 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param RequestStack $request_stack
-   *   Request stack that controls the lifecycle of requests.
-   * @param ReqresUserService $reqres_user_service
-   *   Service for Reqres database connectivity.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack that controls the lifecycle of requests.
+   * @param \Drupal\reqres_users\Service\ReqresUserService $reqres_user_service
+   *   The service for Reqres database connectivity.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The HTTP client.
+   * @param \Drupal\Core\Pager\PagerManagerInterface $pager_manager
+   *   The pager manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, ReqresUserService $reqres_user_service, ClientInterface $http_client) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, ReqresUserService $reqres_user_service, ClientInterface $http_client, PagerManagerInterface $pager_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->requestStack = $request_stack;
     $this->reqresUserService = $reqres_user_service;
     $this->httpClient = $http_client;
+    $this->pagerManager = $pager_manager;
   }
 
   /**
@@ -74,9 +85,11 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_definition,
       $container->get('request_stack'),
       $container->get('reqres_users.service'),
-      $container->get('http_client')
+      $container->get('http_client'),
+      $container->get('pager.manager')
     );
   }
+
 
   /**
    * {@inheritdoc}
@@ -143,52 +156,58 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
-    // Get the current page from the request.
-    $request = $this->requestStack->getCurrentRequest();
+    try {
+      // Get the current page from the request.
+      $request = $this->requestStack->getCurrentRequest();
 
-    // Get the configuration.
-    $config = $this->getConfiguration();
-    $limit = $config['items_per_page'];
+      // Get the configuration.
+      $config = $this->getConfiguration();
+      $limit = $config['items_per_page'];
 
-    // Initialize pager manager and the pager.
-    $pager_manager = \Drupal::service('pager.manager');
-    $pager = $pager_manager->createPager($this->reqresUserService->getTotalRows(), $limit);
-    $page = $pager->getCurrentPage();
+      // Initialize pager manager and the pager using the injected service.
+      $pager = $this->pagerManager->createPager($this->reqresUserService->getTotalRows(), $limit);
+      $page = $pager->getCurrentPage();
 
-    // Fetch users from the database using the service.
-    $users = $this->reqresUserService->getUsers($limit, $page);
+      // Fetch users from the database using the service.
+      $users = $this->reqresUserService->getUsers($limit, $page);
 
-    // Prepare table header.
-    $header = [
-      ['data' => $config['email_label']],
-      ['data' => $config['first_name_label']],
-      ['data' => $config['last_name_label']],
-    ];
-
-    // Build rows for the table.
-    $rows = [];
-    foreach ($users as $user) {
-      $rows[] = [
-        $user->getEmail(),
-        $user->getFirstName(),
-        $user->getLastName(),
+      // Prepare table header.
+      $header = [
+        ['data' => $config['email_label']],
+        ['data' => $config['first_name_label']],
+        ['data' => $config['last_name_label']],
       ];
+
+      // Build rows for the table.
+      $rows = [];
+      foreach ($users as $user) {
+        $rows[] = [
+          $user->getEmail(),
+          $user->getFirstName(),
+          $user->getLastName(),
+        ];
+      }
+
+      // Build the render array.
+      $build = [
+        'table' => [
+          '#type' => 'table',
+          '#header' => $header,
+          '#rows' => $rows,
+          '#empty' => $this->t('No users found.'),
+        ],
+        'pager' => [
+          '#type' => 'pager',
+        ],
+      ];
+
+      return $build;
     }
-
-    // Build the render array.
-    $build = [
-      'table' => [
-        '#type' => 'table',
-        '#header' => $header,
-        '#rows' => $rows,
-        '#empty' => $this->t('No users found.'),
-      ],
-      'pager' => [
-        '#type' => 'pager',
-      ],
-    ];
-
-    return $build;
+    catch (\Exception $e) {
+      // Log error and potentially display a user-friendly error message or fallback content.
+      $this->logger->error('Error fetching users: @message', ['@message' => $e->getMessage()]);
+      return ['#markup' => $this->t('Unable to display users at this time.')];
+    }
   }
 
 }

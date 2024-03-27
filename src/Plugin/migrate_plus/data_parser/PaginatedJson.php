@@ -7,6 +7,7 @@ use Drupal\migrate_plus\Plugin\migrate_plus\data_parser\Json;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\migrate_plus\DataParserPluginBase;
 
 /**
  * Obtain JSON data for migration.
@@ -56,7 +57,7 @@ class PaginatedJson extends Json implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): DataParserPluginBase {
     return new static(
       $configuration,
       $plugin_id,

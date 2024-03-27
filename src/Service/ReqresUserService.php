@@ -2,7 +2,7 @@
 
 namespace Drupal\reqres_users\Service;
 
-use Drupal\reqres_users\ReqresUserServiceInterface;
+use Drupal\reqres_users\Service\ReqresUserServiceInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
 use Drupal\Core\Cache\CacheBackendInterface;
