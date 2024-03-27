@@ -13,5 +13,10 @@
             "name": "Tomasz Turczynski",
             "email": "tomasz@turczynski.com"
         }
-    ]
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Drupal\\Tests\\reqres_users\\": "tests/src/"
+        }
+    }
 }

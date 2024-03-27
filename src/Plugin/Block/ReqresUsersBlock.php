@@ -8,6 +8,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\reqres_users\Service\ReqresUserService;
 
 /**
  * Provides a block with users from Reqres.in API.
@@ -72,7 +73,7 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_id,
       $plugin_definition,
       $container->get('request_stack'),
-      $container->get('reqres_users.user_service'),
+      $container->get('reqres_users.service'),
       $container->get('http_client')
     );
   }
@@ -144,11 +145,15 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
   public function build() {
     // Get the current page from the request.
     $request = $this->requestStack->getCurrentRequest();
-    $page = $request->query->get('page') ?: 0;
 
     // Get the configuration.
     $config = $this->getConfiguration();
     $limit = $config['items_per_page'];
+
+    // Initialize pager manager and the pager.
+    $pager_manager = \Drupal::service('pager.manager');
+    $pager = $pager_manager->createPager($this->reqresUserService->getTotalRows(), $limit);
+    $page = $pager->getCurrentPage();
 
     // Fetch users from the database using the service.
     $users = $this->reqresUserService->getUsers($limit, $page);
@@ -165,8 +170,8 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
     foreach ($users as $user) {
       $rows[] = [
         $user->getEmail(),
-        $user->get('field_first_name')->value,
-        $user->get('field_last_name')->value,
+        $user->getFirstName(),
+        $user->getLastName(),
       ];
     }
 

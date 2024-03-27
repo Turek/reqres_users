@@ -2,12 +2,15 @@
 
 namespace Drupal\reqres_users\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Drupal\Component\EventDispatcher\Event;
 
 /**
  * Defines the event for altering Reqres users.
  */
 class ReqresUsersAlterEvent extends Event {
+
+  // Name for subscribers to reliably use this event.
+  const USERS_ALTER = 'reqres_users_alter';
 
   /**
    * The users to be altered.
