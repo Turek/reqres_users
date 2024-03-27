@@ -9,7 +9,7 @@
  * Alter a query before executing it.
  *
  * This hook is invoked by Drupal's query builder whenever a query tagged with
- * 'reqres_users_query_alter' is about to be executed.
+ * 'reqres_users_query' is about to be executed.
  *
  * @param \Drupal\Core\Database\Query\AlterableInterface $query
  *   The query object.
@@ -18,5 +18,5 @@
  */
 function hook_query_reqres_users_query_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
   // Example: Add a condition to filter users by a specific field.
-  $query->condition('first_name', 'value');
+  $query->condition('first_name', 'Emma', '!=');
 }

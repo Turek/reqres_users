@@ -1,4 +1,14 @@
 services:
-  reqres_users.user_service:
+  reqres_users.service:
     class: Drupal\reqres_users\Service\ReqresUserService
-    arguments: ['@entity_type.manager']
+    arguments: ['@cache.default', '@entity_type.manager', '@event_dispatcher']
+
+  reqres_users.event_subscriber:
+    class: Drupal\reqres_users\EventSubscriber\PostMigrationSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  reqres_users.users_alter_subscriber:
+    class: Drupal\reqres_users\EventSubscriber\ReqresUsersAlterSubscriber
+    tags:
+      - { name: event_subscriber }
