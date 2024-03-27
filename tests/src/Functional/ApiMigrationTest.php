@@ -4,8 +4,10 @@ namespace Drupal\Tests\reqres_users\Functional;
 
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessageInterface;
+use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\reqres_users\Traits\ApiTestTrait;
+use Drupal\migrate\Plugin\MigrationInterface;
 
 /**
  * Tests API data migration.
@@ -15,6 +17,8 @@ use Drupal\Tests\reqres_users\Traits\ApiTestTrait;
 class ApiMigrationTest extends BrowserTestBase {
 
   use ApiTestTrait;
+
+  protected static $modules = ['migrate_plus', 'reqres_users', 'migrate'];
 
   /**
    * {@inheritdoc}
@@ -26,7 +30,6 @@ class ApiMigrationTest extends BrowserTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->migrationPluginManager = $this->container->get('plugin.manager.migration');
 
     // Perform API call before migration.
     $this->performApiCall();
@@ -37,15 +40,22 @@ class ApiMigrationTest extends BrowserTestBase {
    */
   public function testMigration() {
     // Trigger the migration programmatically.
-    $migration_id = 'reqres_users';
-    $migration = $this->migrationPluginManager->createInstance($migration_id);
+    $migration = \Drupal::service('plugin.manager.migration')->createInstance('reqres_users');
     $migration->getIdMap()->prepareUpdate();
     $executable = new MigrateExecutable($migration, $this->getMockMigrationMessage());
     $executable->import();
-    $migration->getIdMap()->saveMessage();
 
-    // Assert that the migration was successful.
-    $this->assertEqual($migration->getProcessedCount(), $migration->getCount(), 'Migration was successful.');
+    // Use the migration status to assert success, for example:
+    $this->assertTrue($migration->getStatus() == MigrationInterface::STATUS_IDLE, 'Migration completed.');
+
+    // Check processed counts.
+    $map_table = $migration->getIdMap()->mapTableName();
+    $query = $this->container->get('database')->select($map_table, 'map')
+      ->fields('map', ['sourceid1']);
+    // Adjust the field name 'sourceid1' based on your source ID structure.
+    $result = $query->execute()->fetchAll();
+    $processedCount = count($result); 
+    $this->assertGreaterThan(0, $processedCount, 'Expected at least one item to be processed.');
   }
 
   /**

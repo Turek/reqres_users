@@ -3,6 +3,7 @@
 namespace Drupal\reqres_users\EventSubscriber;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
