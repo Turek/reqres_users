@@ -25,7 +25,7 @@ class PostMigrationSubscriber implements EventSubscriberInterface {
 
     // Check if there were newly imported or updated items.
     $imported = $id_map->importedCount();
-    $updated = $id_map->updatedCount();
+    $updated = $id_map->updateCount();
 
     // Only invalidate cache if there were updates or new imports.
     if ($imported > 0 || $updated > 0) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\mymodule\EventSubscriber;
+namespace Drupal\reqres_users\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\reqres_users\Event\ReqresUsersAlterEvent;
@@ -16,7 +16,7 @@ class ReqresUsersAlterSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[ReqresUsersAlterEvent::EVENT_NAME][] = ['alterUsers'];
+    $events[ReqresUsersAlterEvent::USERS_ALTER][] = ['alterUsers'];
     return $events;
   }
 

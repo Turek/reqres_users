@@ -15,7 +15,7 @@ use Drupal\reqres_users\Service\ReqresUserService;
  *
  * @Block(
  *   id = "reqres_users_block",
- *   admin_label = @Translation("Reqres Users Block"),
+ *   admin_label = @Translation("Reqres Users"),
  * )
  */
 class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterface {
