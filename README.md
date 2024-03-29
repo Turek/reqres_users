@@ -1,9 +1,9 @@
 Drupal module that provides a block listing the users from a
-third party service. For the purposes of this test, please 
+third party service. For the purposes of this test, please
 integrate with the https://reqres.in/ dummy API.
 
-The block provides a paginated listing of users retrieved 
-from the API, basic configuration of the output is possible 
+The block provides a paginated listing of users retrieved
+from the API, basic configuration of the output is possible
 when placing the block.
 
 There are three extension points exposed to change sql query
@@ -66,11 +66,25 @@ function hook_query_reqres_users_query_alter(\Drupal\Core\Database\Query\Alterab
 
 # Altering output of the block
 
-Check the `ReqresUsersAlterSubscriber.php` file for example implementation of 
+Check the `ReqresUsersAlterSubscriber.php` file for example implementation of
 event based alteration of returned data.
 
 Another example is to use hooks, check `reqres_users.api.php` file for  example
 hook implementation: `hook_reqres_users_data_alter`.
+
+# Altering output of the view generated block
+
+Similar to 'Altering the query' above, but acts on the view block.
+
+```
+function hook_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+  // Check if we are altering the correct view. Replace 'your_view_id' with the actual ID of your view.
+  if ($view->id() === 'reqres_users') {
+    // Example: Add a condition to exclude users with the first name 'Emma'.
+    $query->addWhere('your_group', 'first_name', 'Emma', '<>');
+  }
+}
+```
 
 # Running tests
 

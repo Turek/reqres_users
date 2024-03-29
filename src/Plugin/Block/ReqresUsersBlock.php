@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Provides a block with users from Reqres.in API.
+ * Provides a block with users from Reqres API.
  *
  * @Block(
  *   id = "reqres_users_block",
@@ -62,16 +62,13 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The request stack that controls the lifecycle of requests.
    * @param \Drupal\reqres_users\Service\ReqresUserService $reqres_user_service
    *   The service for Reqres database connectivity.
-   * @param \GuzzleHttp\ClientInterface $http_client
-   *   The HTTP client.
    * @param \Drupal\Core\Pager\PagerManagerInterface $pager_manager
    *   The pager manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, ReqresUserService $reqres_user_service, ClientInterface $http_client, PagerManagerInterface $pager_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, ReqresUserService $reqres_user_service, PagerManagerInterface $pager_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->requestStack = $request_stack;
     $this->reqresUserService = $reqres_user_service;
-    $this->httpClient = $http_client;
     $this->pagerManager = $pager_manager;
   }
 
@@ -85,7 +82,6 @@ class ReqresUsersBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_definition,
       $container->get('request_stack'),
       $container->get('reqres_users.service'),
-      $container->get('http_client'),
       $container->get('pager.manager')
     );
   }

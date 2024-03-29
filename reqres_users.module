@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * The module file for reqres_users.
+ */
+
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function reqres_users_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  if ($view->id() == 'reqres_users' && $display_id == 'block') {
+    // Check if the argument for items per page is set and is numeric.
+    if (!empty($args[0]) && is_numeric($args[0])) {
+      // Set the items per page based on the argument.
+      $view->setItemsPerPage($args[0]);
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function reqres_users_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'reqres_users') {
+    // Iterate through the fields in the view and update the labels.
+    foreach ($view->field as $field_id => $field) {
+      // Get values from State API.
+      $email_label = \Drupal::state()->get('reqres_users.email_label');
+      $first_name_label = \Drupal::state()->get('reqres_users.first_name_label');
+      $last_name_label = \Drupal::state()->get('reqres_users.last_name_label');
+
+      if ($field_id === 'email' && $email_label !== null) {
+        $field->options['label'] = $email_label;
+      }
+      if ($field_id === 'first_name' && $email_label !== null) {
+        $field->options['label'] = $first_name_label;
+      }
+      if ($field_id === 'last_name' && $email_label !== null) {
+        $field->options['label'] = $last_name_label;
+      }
+    }
+  }
+}

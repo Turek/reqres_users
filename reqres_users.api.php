@@ -15,7 +15,7 @@
  *   The query object.
  */
 function hook_query_reqres_users_query_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
-  // Example: Add a condition to filter users by a specific field.
+  // Example: Add a condition to exclude users with the first name 'Emma'.
   $query->condition('first_name', 'Emma', '!=');
 }
 
@@ -34,5 +34,30 @@ function hook_reqres_users_data_alter(array &$users) {
   foreach ($users as $user) {
     // Change email addresses to lowercase.
     $user->setEmail(strtolower($user->getEmail()));
+  }
+}
+
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * This function is used to alter the query for a specific view, adding a condition
+ * to exclude users with the first name 'Emma'. It checks if the current view matches
+ * the specified ID and, if so, modifies the query. Ensure that the field name used
+ * matches the actual database field name for the user's first name.
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The view being executed, containing all data about the view.
+ * @param \Drupal\views\Plugin\views\query\QueryPluginBase $query
+ *   The query object that is used to query the database. Conditions and modifications
+ *   can be applied to this object to change the data that is retrieved by the view.
+ *
+ * @see https://www.drupal.org/docs/drupal-apis/views-api/modify-view-queries
+ */
+function hook_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+  // Check if we are altering the correct view. Replace 'your_view_id' with the actual ID of your view.
+  if ($view->id() === 'reqres_users') {
+    // Example: Add a condition to exclude users with the first name 'Emma'.
+    $query->addWhere('your_group', 'first_name', 'Emma', '<>');
   }
 }
